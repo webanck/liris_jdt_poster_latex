@@ -1,0 +1,305 @@
+\documentclass[final]{beamer}
+
+% [FR] Vérifiez que votre éditeur encode le fichier source en UTF-8 afin d'éviter
+% d'avoir des problèmes.
+% [EN] Make sure your editor uses UTF-8 encoding to avoid some issues.
+\usepackage[utf8]{inputenc}
+% [FR] Pensez à bien déclarer la bonne langue à babel, afin notamment d'avoir un
+% espacement correct autour des signes de ponctuation.
+% [EN] Remember to tell babel which language you're using to get correct spacing
+% around punctuation marks, etc.
+\usepackage[francais]{babel}
+%\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+% Times new roman.
+\usepackage{times}
+
+% [FR] Chargement de beamerposter.sty.
+% "scale" = Facteur d'agrandissement du texte.
+% [EN] Loading beamerposter.sty.
+% "scale" = Scaling factor for all text.
+\usepackage[
+    orientation = portrait,
+    size        = a0,
+    scale       = 2
+]{beamerposter}
+
+% [FR] Chargement de beamerthemelirisposter.sty.
+% [EN] Loading beamerthemelirisposter.sty.
+\usepackage{beamerthemelirisposter}
+
+% [FR] Si vous n'avez pas besoin de bibliographie, je suppose que vous pouvez
+% retirer les packages csquotes et biblatex, mais dans ce cas pensez également à
+% retirer les lignes telles que \addbibresource{demo.bib}
+% ou encore \renewcommand*{\bibfont}{\small}, et bien sûr les \cite et
+% l'appel à \printbibliography situés plus loin dans le document.
+% Gestion automatique des guillemets dans les références en prenant en compte
+% la langue spécifiée à babel.
+% [EN] If you do not need a bibliography, you can remove the csquotes and
+% biblatex packages, but if you do, remember to also remove bibliography-related
+% lines, such as \addbibresource{demo.bib} or \renewcommand*{\bibfont}{\small},
+% and of course the \cite and \printbibliography that come later in the file.
+\usepackage{csquotes}
+% [FR] Pour une meilleur gestion de l'UTF-8 dans la bibliographie, on peut aussi
+% utiliser le programme "biber" et spécifier "backend = biber" à biblatex, mais
+% biber n'est pas toujours inclus dans les distributions LaTeX.
+% [EN] The "biber" backend program handles UTF-8 better, but as it is not
+% always included in LaTeX distributions, I will leave "bibtex" here for now.
+\usepackage[backend = bibtex]{biblatex}
+\addbibresource{demo.bib}
+% [FR] Taille de police pour la bibliographie.
+% [EN] Font size for the bibliography.
+\renewcommand*{\bibfont}{\small}
+
+
+\title{Guerre et paix}
+\subtitle{Un roman de Léon \bsc{Tolstoï}}
+\author{AUTEURS}
+\institute{%
+    \begin{normalsize}
+        Laboratoire d'InfoRmatique en Image et Systèmes d'information
+    \end{normalsize}
+    
+    \begin{scriptsize}
+        LIRIS UMR~5205 CNRS\,/\,%
+        INSA de Lyon\,/\,%
+        Université Claude Bernard Lyon~1\,/\,%
+        Université Lumière Lyon~2\,/\,%
+        École Centrale de Lyon
+    \end{scriptsize}%
+}
+
+
+% [FR] Le poster se compose uniquement d'une "diapositive" ("frame"). Le
+% contenu sera centré verticalement, sauf cas très particuliers.
+% [EN] The poster is comprised of a single Beamer frame. Its contents will
+% generally be vertically centred.
+\begin{document}
+\begin{frame}
+
+% [FR] Division en deux colonnes, la première occupant 65 % de la largeur
+% disponible et la seconde prenant le reste.
+% [EN] Creating two columns, with the first one spanning 65 % of available
+% width and the other using the rest.
+\liriscolumns{65}{
+    % [FR] Création d'un bloc en donnant son titre et son contenu.
+    % [EN] Creating a block, giving its title and contents.
+    \lirisblock{Commandes principales}{
+        $\bullet$ \texttt{\textbackslash lirisblock[<Hauteur>]\{<Titre>\}\{<Texte>\}}
+        
+        Crée un bloc, éventuellement avec une hauteur fixée.
+        
+        $\bullet$ \texttt{\textbackslash liriscolumns[<Ht>]\{<Larg>\}\{<Gche>\}\{<Drte>\}}
+        
+        Crée deux colonnes, la première occupant \texttt{<Larg>}\,\% de la largeur disponible et la seconde le reste. Le contenu des colonnes est donné par \texttt{<Gche>} et \texttt{<Drte>}. Si une hauteur \texttt{<Ht>} est spécifiée, les deux colonnes l'adopteront.
+        
+        $\bullet$ \texttt{\textbackslash lirisinterline}
+        
+        Crée un espacement vertical correspondant à la distance utilisée entre les colonnes de \texttt{\textbackslash liriscolumns}. Utile pour un rendu uniforme, mais certains préféreront utiliser \texttt{\textbackslash vfill}, afin de répartir le contenu sur tout le poster.
+        
+        Vous trouverez davantage d'explications en commentaires dans le \texttt{.tex} et dans \texttt{beamerthemelirisposter.sty}.
+    } % Fin du bloc. / End of the block.
+}{ % Début de la colonne de droite. / Beginning of the right column.
+    \lirisblock{Listes imbriquées}{
+        \begin{itemize}
+            \item La littérature russe
+            \begin{itemize}
+                \item Fedor Dostoïevski
+                \begin{itemize}
+                    \item Crime et châtiment
+                    \item Le joueur
+                    \item Les frères Karamazov
+                \end{itemize}
+                \item Leo~N. Tolstoï
+                \begin{itemize}
+                    \item Guerre et paix
+                    \item Anna Karénine
+                \end{itemize}
+            \end{itemize}
+            \item La littérature autrichienne
+            \begin{itemize}
+                \item Elfriede Jelinek
+                \item Robert Musil
+                \begin{itemize}
+                    \item L'homme sans qualités
+                    \item Les désarrois de l'élève Törless
+                \end{itemize}
+            \end{itemize}
+        \end{itemize}
+    }
+}
+
+% [FR] Espacement vertical égal à l'écart entre les colonnes crées
+% par \liriscolumns. Sinon, utiliser \vfill pour opter pour un étalement du
+% contenu du poster sur toute la hauteur disponible.
+% [EN] Vertical spacing matching the length of the gap between the columns
+% that \liriscolumns creates. If you prefer to have your elements spread out
+% over the poster's height, you might want to use \vfill instead.
+\lirisinterline
+
+\liriscolumns{30}{
+    % [FR] Ce bloc a une hauteur fixée à 19 cm. La même hauteur sera donnée
+    % au bloc se trouvant dans la colonne de droite afin que les deux
+    % soient similaires.
+    % [EN] This bloc has a fixed height of 19 cm. The same height will be
+    % applied to the block that sits in the right column, in order to make
+    % them look similar.
+    \lirisblock[19cm]{Listes numérotées}{%
+        \begin{enumerate}
+            \item Villes
+            \begin{enumerate}
+                \item Lyon
+                \item Paris
+            \end{enumerate}
+            \item Nourriture
+            \begin{enumerate}
+                \item Tourte
+                \item Radis
+                \begin{enumerate}
+                    \item Blanc
+                    \item Noir
+                \end{enumerate}
+            \end{enumerate}
+        \end{enumerate}%
+    }
+}{
+    % [FR] Comme annoncé, bloc avec la même hauteur que celui se trouvant
+    % à sa gauche.
+    % [EN] As stated, we give the same height to this block.
+    \lirisblock[19cm]{Un tableau au milieu d'un bloc de même hauteur}{
+        % Pour centrage vertical. / Vertical centring.
+        \vfill
+        \begin{center}
+            % [FR] Les espacements par défaut des tableaux peuvent sembler
+            % inadaptés pour les posters. \tabcolsep gère l'espace entre les
+            % colonnes, et \arraystretch (un facteur valant 1 par défaut) celui
+            % entre les lignes. Voici des exemples de réglages :
+            % [EN] Default spacings in tables can seem inappropriate for
+            % posters. \tabcolsep defines the space left between columns, and
+            % \arraystretch (a factor with a default value of 1) can be used to
+            % change the spacing between lines. Here's an example:
+            \setlength{\tabcolsep}{0.35em}
+            \renewcommand{\arraystretch}{1.25}
+            \begin{tabular}{| l | c | c | c |}
+                \hline
+                Méthode     & Classée~1 & Classée~2 & Classée~3 \\
+                \hline
+                Méthode~1   & 18        & 10        & 36        \\
+                Méthode~2   & 13        & 39        & 12        \\
+                Méthode~3   & 33        & 15        & 16        \\
+                \hline
+            \end{tabular}
+        \end{center}
+        % Pour centrage vertical. / Vertical centring.
+        \vspace*{\fill}
+    }
+}
+
+\lirisinterline
+
+\lirisblock{Bloc seul sur sa ligne, avec une citation}{
+    % [FR] Pour les guillemets français, utiliser :
+    %   \og Blabla \fg{}
+    % ou
+    %   << Blabla >>
+    % Babel s'occupe du remplacement, de l'espacement, etc.
+    % En anglais (ou en cas d'imbrications de guillemets), cependant, utilisez :
+    %   ``Blabla''
+    % (Double accent grave pour ouvrir, et double apostrophe pour fermer.)
+    % Enfin, notez qu'on met généralement en évidence les mots-clefs
+    % avec \alert{blabla}, une commande définie par Beamer.
+    % [EN] To obtain French quotation marks, if you're using babel with the
+    % "francais" (or "french, or "frenchb") option, you can use these:
+    %   \og Text \fg{}
+    % or
+    %   << Text >>
+    % For English quotation marks, use:
+    %   ``Text''
+    % (Double grave accent ("backtick") to open, double apostrophe to close.)
+    % Moreover, note that Beamer's \alert{text} command can be used to
+    % highlight keywords.
+    << Un logiciel est dit \alert{``libre''} si sa licence donne à chacun le droit d'\alert{utiliser} pour tous usages, d'\alert{étudier}, de \alert{modifier} et de \alert{publier} ces modifications, de \alert{dupliquer} et \alert{donner} ce logiciel. >>~\cite{fs-def}
+}
+
+\lirisinterline
+
+% [FR] Deux colonnes de même hauteur.
+% [EN] Two columns having the same height.
+\liriscolumns[25cm]{50}{
+    % [FR] Bloc occupant toute la hauteur de la colonne.
+    % [EN] Bloc spanning the full column height.
+    \lirisblock[25cm]{Mathématiques, etc.}{
+        \begin{description}
+            \item[$H_0$] La méthode~3 est aussi efficace que les deux autres
+            \item[$H_A$] La méthode~3 est soit plus efficace soit moins efficace qu'une ou que les deux autres méthodes.
+        \end{description}
+        
+        \[
+            U \sim B(N, p)
+            \qquad
+            N = 64,
+            \qquad
+            p = \frac{1}{3}
+        \]
+        \[
+            P(U = 33)
+            =
+            \left(
+                \begin{array}{c}
+                    N   \\
+                    33  \\
+                \end{array}
+            \right)
+            \pi^{p}(1 - \pi)^{N - 3}
+            \simeq
+            0.00111
+        \]
+    }
+}{
+    \vfill
+
+    \begin{center}
+        % [FR] Exemple de figure afin de montrer qu'on peut mettre du contenu
+        % sans forcément le placer dans un \lirisblock. Cela vous montre en même
+        % temps quelques principes de TikZ, et une utilisation des couleurs
+        % définies par le thème : lirisdarkblue, etc.
+        % [EN] A figure showing that content does not necessarily have to be put
+        % in a \lirisblock. It also showcases basic TikZ functionalities and
+        % uses colours that were defined in the theme.
+        \begin{tikzpicture}[
+                    scale = 1.25,
+                    lirisdarkblue,
+                    line width = 15pt,
+                    every node/.style = {
+                        draw = lirismediumblue,
+                        circle,
+                        fill = lirislightblue,
+                        text = black,
+                        font = \Large\bfseries,
+                        minimum size = 140pt
+                    }
+                ]
+            \node (n1) at  (0, 0) {1};
+            \node (n2) at  (5, 3) {2};
+            \node (n3) at (12, 1) {3};
+            \draw (n1) -- (n2) -- (n3);
+        \end{tikzpicture}
+    \end{center}
+
+    % [FR] Grâce au \vfill, le bloc ci-dessous est poussé vers le bas de la
+    % colonne, et son extrémité inférieure sera alignée avec celle du bloc de
+    % la colonne de gauche, grâce notamment au fait que le bloc de gauche a été
+    % explicitement réglé à la même hauteur que les colonnes.
+    % [EN] This \vfill allows the following block to be pushed to the bottom of
+    % the column, hence making the bottom of the block aligned with the bottom
+    % of the left column block, thanks to the fact that the left block was set
+    % to have the same height as the columns.
+    \vfill
+
+    \lirisblock{Bibliographie}{
+        \printbibliography
+    }
+}
+
+\end{frame}
+\end{document}

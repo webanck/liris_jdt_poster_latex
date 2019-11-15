@@ -1,0 +1,597 @@
+% **************************************************************************
+% Beamer template for the LIRIS laboratory
+%
+%%%%% Written by
+% Christian Wolf (cw)
+% 	christian.wolf@liris.cnrs.fr
+% Olivier Kuhn (ok)
+% 	olivier.kuhn@liris.cnrs.fr
+% 
+% Please inform autors if you modify LIRIS beamer style
+%
+% Updated to the new LIRIS style by Maël Minot (mm).
+%
+% **************************************************************************
+% Changelog:
+% 1.00 29.11.2006 cw:	- First version
+% 2.00 10.12.2007 ok: 	- Second version
+%			- Scalable logo and item
+%		   	- Background image
+%		    	- Enumaration style changed (number instead of bubbles)
+%  		    	- Color shade in frame title background (shadow theme)
+%		    	- Overfull badboxes warning removed
+%		     	- Remove shadow on blocks (not nice with background picture)
+%			- modifications on footers
+% 2.10 09.01.2008 ok	- Addition of 2 options:
+% 				- nobackground: remove background picture
+%				- nogradient: remove gradient in frame title and in the background if no background picture
+% 2.11 07.04.2008 ok	- Bug fix: set normal text backgound color, causes problems with transparent blocks
+% 3.00 xx.05.2017 mm: Updated to match the new graphical style of the LIRIS.
+%                 The user interface got a bit simpler and permissive, too,
+%                 I hope.
+%
+%
+%
+% mm: Things that are defined here and should be useful to the user to write
+% the .tex file:
+%
+%
+%###### \lirisblock[<Height>]{<Title>}{<Contents>}
+%
+% Create a styled block with the given title and contents. The <Height> can be
+% specified, notably to put several blocks next to each other in a more
+% beautiful way by giving the same height to each of them.
+%
+%
+%###### \liriscolumns[<Height>]{<Width>}{<Left>}{<Right>}
+%
+% Create two columns. The first one will span <Width>% of the currently
+% available width, and the second one will use what's left. <Left> and <Right>
+% are the columns' contents. The <Height> can be specified and will be applied
+% to both columns. Generally, when you give a set height to the columns, it can
+% be interesting to put \vfill between the elements in them, to spread them
+% throughout the height of the columns, so that the tops and bottoms of the two
+% columns are aligned.
+% Example:
+%
+%#  \liriscolumns[15cm]{50}{
+%#      \lirisblock[15cm]{Fat block}{Contents}
+%#  }{
+%#      \lirisblock{A block}{Contents}
+%#      \vfill
+%#      \lirisblock{Another block}{Contents}
+%#  }
+%
+% This command can be nested, so if you need more than two columns, you should
+% be able to do something like this (example for three equal columns):
+%
+%#  \liriscolumns{33.333}{
+%#      A
+%#  }{
+%#      % Here, 33% of the line is 50% of what's left.
+%#      \liriscolumns{50}{
+%#          B
+%#      }{
+%#          C
+%#      }
+%#  }
+%
+%
+%###### \lirisinterline
+%
+% Vertical space meant to be put between successive blocks or groups of columns.
+% Example:
+%
+%#  \lirisblock{A}{B}
+%#  \lirisinterline
+%#  \lirisblock{C}{D}
+%#  \lirisinterline
+%#  \liriscolumns{50}{E}{F}
+%
+% This vertical space has a length of \lirisinterlength, so you can use it in
+% calculations if you want. For example, this looks rather good:
+%
+%#  \liriscolumns{50}{
+%#     \lirisblock[15cm]{Fat block}{Contents}
+%#  }{
+%#     \lirisblock[15cm / 2 - 0.5\lirisinterlength]{A block}{Contents}
+%#     \lirisinterline
+%#     \lirisblock[15cm / 2 - 0.5\lirisinterlength]{Another block}{Contents}
+%#  }
+%
+%######
+%
+% The user should also use \title (also, optionally, \subtitle), \author and
+% \institute to obtain a nice header, as shown in the sample input file.
+% Note, however, that there is no need to call \maketitle afterwards: all
+% this information goes into the headline as soon as a frame is opened.
+%
+% Colours defined in the theme can be accessed from within the .tex file, so
+% the user is strongly advised to use them for figures and such, especially:
+%
+%   lirisgreen
+%   lirisfuchsia
+%   lirislightgreen
+%   lirismediumblue
+%   lirisdarkblue
+%   lirismauve
+%   lirislightblue
+%   lirisorange
+%
+% **************************************************************************
+\ProvidesPackage{beamerthemelirisposter}
+
+
+\RequirePackage{calc}
+\RequirePackage{tikz}
+\RequirePackage{xifthen}
+
+
+\mode<presentation>
+
+% **************************************************************************
+% Options
+% **************************************************************************
+
+\ProcessOptionsBeamer
+
+\useoutertheme{split}
+
+% **************************************************************************
+% Colours
+% **************************************************************************
+
+% Old LIRIS colours.
+\definecolor{lirisdarkblue1}{RGB}{23,74,124}
+\definecolor{lirisdarkblue2}{RGB}{0,73,89}
+\definecolor{lirisdarkblue3}{RGB}{0,60,75}
+\definecolor{lirislightblue1}{RGB}{197,198,213}
+\definecolor{lirislightblue2}{RGB}{156,161,189}
+\definecolor{lirislightblue3}{RGB}{30,76,124}
+\definecolor{liristextcolor}{RGB}{0,73,89}
+\definecolor{lirisstructure}{RGB}{149,113,171}
+\definecolor{lirisalert}{RGB}{181,57,125}
+
+% New LIRIS colours.
+\definecolor{lirisgreen}{RGB}{95,137,39}
+\definecolor{lirisfuchsia}{RGB}{181,57,125}
+\definecolor{lirislightgreen}{RGB}{184,185,12}
+\definecolor{lirismediumblue}{RGB}{92,161,220}
+\definecolor{lirisdarkblue}{RGB}{35,92,141}
+\definecolor{lirismauve}{RGB}{149,113,171}
+\definecolor{lirislightblue}{RGB}{160,199,231}
+\definecolor{lirisorange}{RGB}{255,141,64}
+
+\definecolor{liristextcolor}{RGB}{23,74,124}
+\definecolor{lirisstructure}{RGB}{149,113,171}
+\definecolor{lirisalert}{RGB}{181,57,125}
+
+% Laboratory colour.
+\definecolor{c-liris}{RGB}{153,158,185}
+
+% Team colours.
+\definecolor{c-imagine}{RGB}{81,91,161}
+\definecolor{c-m2disco}{rgb}{0.5411,0.7607,0.9019}
+\definecolor{c-geomod}{RGB}{86,192,217}
+\definecolor{c-bd}{RGB}{68,182,172}
+\definecolor{c-dm2l}{RGB}{125,185,86}
+\definecolor{c-grama}{RGB}{203,211,0}
+\definecolor{c-silex}{RGB}{255,211,0}
+\definecolor{c-drim}{RGB}{241,142,0}
+\definecolor{c-soc}{RGB}{230,71,42}
+\definecolor{c-beagle}{RGB}{231,69,135}
+\definecolor{c-r3am}{RGB}{187,28,130}
+\definecolor{c-saara}{RGB}{126,56,138}
+
+% Poles colours.
+\definecolor{c-vision}{RGB}{181,191,222}
+\definecolor{c-geometrie}{RGB}{181,224,245}
+\definecolor{c-donnes}{RGB}{163,204,133}
+\definecolor{c-interactions}{RGB}{250,240,153}
+\definecolor{c-services}{RGB}{250,201,153}
+\definecolor{c-simulation}{RGB}{224,178,207}
+
+\useoutertheme{shadow}
+\setbeamercolor*{palette primary}{fg = white, bg = green}
+\setbeamercolor*{palette secondary}{fg = lirisdarkblue, bg = white}
+\setbeamercolor*{palette tertiary}{fg = lirisdarkblue, bg = white}
+\setbeamercolor*{palette quaternary}{fg = lirisdarkblue, bg = white}
+
+\setbeamercolor{section in toc}{fg = liristextcolor}
+\setbeamercolor{alerted text}{fg = lirisalert}
+\setbeamercolor{structure}{fg = lirisstructure}
+\setbeamercolor{normal text}{fg = liristextcolor, bg = lirislightblue1}
+\setbeamercolor{item}{fg = lirisdarkblue1, bg = lirisdarkblue2}
+\setbeamercolor{description item}{fg = lirisstructure}
+
+\setbeamercolor{section in head/foot}{fg = lirisalert, bg = lirislightblue}
+\setbeamercolor{titlelike}{parent=palette quaternary}
+\setbeamercolor{frametitle}{parent=palette secondary}
+
+\setbeamercolor{header}{parent = palette tertiary}
+\setbeamercolor{footer}{fg = liristextcolor, bg = white}
+\setbeamercolor{footer sep}{fg = liristextcolor, bg = liristextcolor, parent = author in head/foot}
+\setbeamercolor{barre blanche}{fg = liristextcolor, bg = white}
+\setbeamercolor{barre fuchsia}{fg = liristextcolor, bg = lirisfuchsia}
+\setbeamercolor{barre verte}{fg = liristextcolor, bg = lirislightgreen}
+\setbeamercolor{titlefooter}{fg = lirislightblue1, bg = liristextcolor}
+
+
+% **************************************************************************
+% Background
+% **************************************************************************
+
+\setbeamertemplate{background canvas}{%
+    \includegraphics[
+        width = \paperwidth,
+        height = \paperheight
+    ]{theme_img/fond_poster}%
+}
+
+
+% **************************************************************************
+% Misc. settings
+% **************************************************************************
+
+% Shadows do not render well with a picture in background.
+%\useinnertheme[shadow = false]{rounded}
+%\setbeamertemplate{blocks}[default]
+\setbeamertemplate{blocks}[rounded][shadow = false]
+\setbeamercovered{transparent}
+\usefonttheme[onlymath]{serif}
+\setbeamertemplate{navigation symbols}{}
+
+\newlength{\lirispostermargin}
+\setlength{\lirispostermargin}{3cm}
+\setbeamersize{text margin left    = \lirispostermargin}
+\setbeamersize{text margin right   = \lirispostermargin}
+
+\setbeamertemplate{items}[default]
+
+\setbeamercolor*{block body}{bg = lirislightblue1!20} 
+\setbeamercolor*{block body alerted}{bg = lirislightblue1!20}
+\setbeamercolor*{block body example}{bg = lirislightblue1!20}
+\setbeamercolor*{block title}{fg = lirismediumblue, bg = lirislightblue1!20}
+\setbeamercolor*{block title alerted}{fg = lirisfuchsia, bg = lirislightblue1!20}
+\setbeamercolor*{block title example}{fg = lirislightgreen!80!black, bg = lirislightblue1!20}
+
+\setbeamerfont{block title}{series = \bfseries}
+
+\setbeamertemplate{bibliography item}[text]
+
+
+% **************************************************************************
+% Bullets
+% **************************************************************************
+
+\newcommand{\lirisformatenumitem}[1]{%
+    \textbf{\textcolor{white}{#1}}%
+}
+
+% [#1]   Number.
+%  #2    Colour.
+%  #3    Size.
+\newcommand{\lirissquare}[3][]{%
+    \begin{tikzpicture}
+        \fill[
+            fill = #2,
+            rounded corners = #3/4
+        ] (0, 0) rectangle ++(#3, #3);
+        
+        % If a number was given as optional parameter, we write
+        % it in the middle of the square.
+        \ifthenelse{\isempty{#1}}{}{
+            \node[inner sep = 0pt] at (#3 / 2, #3 / 2) {%
+                \scalebox{0.8}{\lirisformatenumitem{#1}}%
+            };
+        }
+    \end{tikzpicture}%
+}
+
+\newcommand{\lirisitemizeitem}[2][]{%
+    \raisebox{-0.075ex}{\lirissquare[#1]{#2}{1.5ex}}%
+}
+
+% Itemize:
+\useitemizeitemtemplate{%
+    \lirisitemizeitem{lirismediumblue}%
+}
+\usesubitemizeitemtemplate{%
+    \lirisitemizeitem{lirismauve}%
+}
+\usesubsubitemizeitemtemplate{%
+    \lirisitemizeitem{lirislightgreen}%
+}
+
+% Enumerate:
+\useenumerateitemtemplate{%
+    \lirisitemizeitem[\insertenumlabel]{lirismediumblue}%
+}
+\usesubenumerateitemtemplate{%
+    \lirisitemizeitem[\insertsubenumlabel]{lirismauve}%
+}
+\usesubsubenumerateitemtemplate{%
+    \lirisitemizeitem[\insertsubsubenumlabel]{lirislightgreen}%
+}
+
+
+% **************************************************************************
+% Headline
+% **************************************************************************
+
+% M. M.: Even when two coloured boxes are perfectly put on top of each other,
+% most PDF readers seem to display a very thin clearer line in between.
+% The authors of this theme seemed to have noticed that and used negative spaces
+% to hide these artefacts. Here is a command just to ensure consistency and make
+% the whole thing easier to maintain.
+% Strangely enough, the artefacts are sometimes more visible when zooming out.
+% I tested different lengths, trying not to do too much damage to the layout.
+% The length used is stored, so it can be used to correct stuff if needed.
+% Of course, most people won't really notice the difference, but still...
+% If you don't like the idea or don't care about artefacts, you can
+% simply set this length to 0, and everything should be fine.
+\newlength{\lengthartefact}
+% Artefacts seem more visible on a poster, so I used a larger value than for
+% slideshows, just to make sure.
+\setlength{\lengthartefact}{1pt}
+\newcommand{\removevartefact}{\vspace{-\lengthartefact}}
+
+\newcommand{\bicolouredbar}[2]{%
+    \centerline{%
+        \hbox{%
+            \begin{beamercolorbox}[
+                        wd = 0.5\paperwidth,
+                        ht = 1.2ex,
+                        dp = 0ex
+                    ]{#1}
+                %
+            \end{beamercolorbox}%
+            \begin{beamercolorbox}[
+                        wd = 0.5\paperwidth,
+                        ht = 1.2ex,
+                        dp = 0ex
+                    ]{#2}
+                %
+            \end{beamercolorbox}%
+        }%
+    }%
+}
+
+\setbeamerfont{title}{series = \bfseries}
+\setbeamerfont{subtitle}{series = \bfseries}
+\setbeamerfont{author}{
+    series = \bfseries,
+    shape = \itshape,
+    size = \small
+}
+
+\newlength{\lirissizesquareinstitute}
+\newlength{\lirisindentinstitute}
+
+\setbeamertemplate{headline}{%
+    \vskip 2cm
+    \bicolouredbar{barre verte}{barre blanche}%
+    \removevartefact
+    {%
+        \centering%
+        \begin{beamercolorbox}[
+                    wd = \paperwidth,
+                    dp = 0.2ex,
+                    center
+                ]{barre blanche}
+            \vskip 1cm
+            {%
+                \usebeamerfont{title}%
+                \usebeamercolor[fg]{title}%
+                \inserttitle\par%
+            }%
+            \ifx\insertsubtitle\@empty%
+                %
+            \else%
+                \vskip 0.75cm%
+                {%
+                    \usebeamerfont{subtitle}%
+                    \usebeamercolor[fg]{subtitle}%
+                    \insertsubtitle\par%
+                }%
+            \fi%
+            \vskip 1cm
+            {%
+                \usebeamerfont{author}%
+                \usebeamercolor[fg]{author}%
+                \insertauthor\par%
+            }%
+            \vskip 1cm
+        \end{beamercolorbox}
+    } % End of \centering.
+    \removevartefact
+    \bicolouredbar{barre blanche}{barre fuchsia}
+    
+    \vspace{1cm}
+    
+    \setlength{\lirisindentinstitute}{0.125\paperwidth}
+    
+    % <indent> <coloured square> <hspace> <institute>
+    \hspace{\lirisindentinstitute}%
+    {%
+        \usebeamerfont{institute}%
+        \usebeamercolor[fg]{institute}%
+        \setlength{\lirissizesquareinstitute}{2.125em}%
+        \parbox{\lirissizesquareinstitute}{%
+            \lirissquare{lirisfuchsia}{\lirissizesquareinstitute}%
+        }%
+        \hspace{0.5em}%
+        \parbox{\paperwidth - \lirisindentinstitute - \lirissizesquareinstitute - 0.5em}{%
+            \insertinstitute%
+        }%
+    }%
+}
+
+
+% **************************************************************************
+% Footline
+% **************************************************************************
+
+% #1    Logo name. "theme_img/logo_" will be appended before it.
+\newcommand{\lirisfootlinelogo}[1]{%
+    \includegraphics[height = 4cm]{theme_img/logo_#1}%
+}
+
+\setbeamertemplate{footline}{%
+    \bicolouredbar{barre verte}{barre blanche}
+    \removevartefact
+    \begin{beamercolorbox}[
+                wd  = \paperwidth,
+                sep = 0.75cm,
+                center
+            ]{barre blanche}
+        \lirisfootlinelogo{liris}\hfill%
+        \lirisfootlinelogo{cnrs}\hfill%
+        \lirisfootlinelogo{insa}\hfill%
+        \lirisfootlinelogo{ucbl}\hfill%
+        \lirisfootlinelogo{lyon2}\hfill%
+        \lirisfootlinelogo{centrale}
+    \end{beamercolorbox}%
+}
+
+
+% **************************************************************************
+% Commands for the user and tools used to define them
+% **************************************************************************
+
+\newlength{\lirisblocktikzinnersep}
+\setlength{\lirisblocktikzinnersep}{1cm}
+
+\newlength{\lirisblocktitlesquaresize}
+
+% Used to format the title of a lirisblock.
+\newcommand*{\lirisblocktitle}[1]{%
+    {%
+        \usebeamerfont{block title}%
+        \usebeamercolor[fg]{block title}%
+        \raggedright%
+        \setlength{\lirisblocktitlesquaresize}{1em}
+        % The square is shifted on the left to be put halfway on the block's
+        % edge.
+        \hspace{-\lirisblocktikzinnersep}%
+        \hspace{-0.5\lirisblocktitlesquaresize}%
+        \raisebox{-0.25ex}{%
+            \lirissquare{\lirisblocktitlesquarecolour}{\lirisblocktitlesquaresize}%
+        }%
+        \liriscolournext%
+        \hspace{0.5em}%
+        #1\strut\par%
+    }%
+}
+
+% #1 (Optional) Height of the block.
+% #2 Title of the block.
+% #3 Contents of the block.
+\newcommand{\lirisblock}[3][]{%
+    \begin{tikzpicture}
+        \node[
+            fill = white,
+            opacity = 0.55,
+            text opacity = 1,
+            rounded corners = 1cm,
+            inner sep = \lirisblocktikzinnersep
+        ] {%
+            \ifthenelse{\isempty{#1}}{%
+                \begin{minipage}{\linewidth - 2\lirisblocktikzinnersep}
+            }{%
+                \begin{minipage}[s][#1 - 2\lirisblocktikzinnersep][t]{\linewidth - 2\lirisblocktikzinnersep}
+            }%
+                    \raggedright%
+                    \lirisblocktitle{#2}
+                
+                    #3
+                \end{minipage}%
+            %
+        };
+    \end{tikzpicture}%
+}
+
+\newlength{\lirisinterlength}
+\setlength{\lirisinterlength}{2.5cm}
+
+% #1 (Optional) Height of the columns.
+% #2 Width (in % of linewidth) of the first column.
+% #3 Contents of the first column.
+% #4 Contents of the second column.
+\newcommand{\liriscolumns}[4][]{%
+    \ifthenelse{\isempty{#1}}{%
+        \begin{minipage}{%
+                    0.01\linewidth * \real{#2} - 0.5\lirisinterlength%
+                }
+    }{%
+        \begin{minipage}[c][#1]{%
+                    0.01\linewidth * \real{#2} - 0.5\lirisinterlength%
+                }
+    }
+            #3%
+        \end{minipage}%
+    %
+    \hfill%
+    \ifthenelse{\isempty{#1}}{%
+        \begin{minipage}{%
+                    \linewidth - 0.01\linewidth * \real{#2} - 0.5\lirisinterlength%
+                }
+    }{%
+        \begin{minipage}[c][#1]{%
+                    \linewidth - 0.01\linewidth * \real{#2} - 0.5\lirisinterlength%
+                }
+    }
+            #4%
+        \end{minipage}%
+    %
+}
+
+\newcommand{\lirisinterline}{%
+    \par\vspace{\lirisinterlength}%
+}
+
+% The initial value should be temporary.
+\newcommand{\lirisblocktitlesquarecolour}{black}
+\newcounter{liriscolourcounter}
+
+% Globally set \lirisblocktitlesquarecolour.
+\newcommand{\gdefliriscolour}[1]{%
+    \global\def\lirisblocktitlesquarecolour{#1}%
+}
+
+% A kind of "switch/case" statement to circle through a list of colours.
+% At each call, the chosen colour is put in \lirisblocktitlesquarecolour.
+\newcommand{\liriscolournext}{%
+    \ifthenelse{\value{liriscolourcounter} = 0}{%
+        \gdefliriscolour{lirisgreen}%
+    }{%
+        \ifthenelse{\value{liriscolourcounter} = 1}{%
+            \gdefliriscolour{lirisorange}%
+        }{%
+            \ifthenelse{\value{liriscolourcounter} = 2}{%
+                \gdefliriscolour{lirismediumblue}%
+            }{%
+                \ifthenelse{\value{liriscolourcounter} = 3}{%
+                    \gdefliriscolour{lirisfuchsia}%
+                }{%
+                    \ifthenelse{\value{liriscolourcounter} = 4}{%
+                        \gdefliriscolour{lirislightgreen}%
+                    }{%
+                        \gdefliriscolour{lirismauve}%
+                    }%
+                }%
+            }%
+        }%
+    }%
+    \stepcounter{liriscolourcounter}%
+    % If we reached the end of the colour list, we go back to the start.
+    \ifthenelse{\value{liriscolourcounter} > 5}{%
+        \setcounter{liriscolourcounter}{0}%
+    }{}%
+}
+
+% Initializing \lirisblocktitlesquarecolour as soon as possible:
+\AtBeginDocument{\liriscolournext}
+
+
+\mode<all>
